@@ -7,6 +7,14 @@ const userSchema = new mongoose.Schema(
     screenName: String,
     location: String,
     profileImage: String,
+    token: {
+      iv: String,
+      content: String,
+    },
+    tokenSecret: {
+      iv: String,
+      content: String,
+    },
   },
   { timestamps: true }
 );
