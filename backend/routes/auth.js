@@ -3,6 +3,8 @@ const passport = require('passport');
 const { validateWebhook, validateSignature } = require('twitter-autohook');
 const url = require('url');
 
+const Tweet = require('../models/Tweet');
+
 const router = express.Router();
 
 const auth = {
@@ -47,8 +49,30 @@ router.post('/twitter/webhook', function(req, res, next) {
     console.error(e);
     return next(e);
   }
+  filterTweets(req.body);
   console.log('Event received:', JSON.stringify(req.body, null, 2));
   res.status(200).end();
 });
+
+const isMentionedTweet = (event) =>
+  event &&
+  event.tweet_create_events &&
+  event.tweet_create_events.length &&
+  event.tweet_create_events.entities.user_mentions.length;
+
+const filterTweets = async (event) => {
+  if (!event) return;
+  if (isMentionedTweet(event)) {
+    const tweet = event.tweet_create_events[0];
+    user = await new Tweet({
+      userId: event.for_user_id,
+      tweetId: tweet.id_str,
+      text: tweet.text,
+      timestamp: new Date(tweet.timestamp_ms * 1000),
+      inReplyToStatusId: tweet.in_reply_to_status_id_str,
+      inReplyToUserId: tweet.in_reply_to_user_id_str,
+    }).save();
+  }
+};
 
 module.exports = router;
