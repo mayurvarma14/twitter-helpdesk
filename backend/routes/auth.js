@@ -38,7 +38,7 @@ router.get('/twitter/webhook', function(req, res, next) {
       }
     } catch (e) {
       console.error(e);
-      next(e);
+      return next(e);
     }
 
     const crc = validateWebhook(req.query.crc_token, auth, res);
