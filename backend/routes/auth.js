@@ -23,7 +23,7 @@ router.get('/twitter/webhook', function(req, res, next) {
       token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
       consumer_key: process.env.TWITTER_CONSUMER_KEY,
       consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-      env: TWITTER_WEBHOOK_ENV,
+      env: process.env.TWITTER_WEBHOOK_ENV,
     };
     try {
       if (
