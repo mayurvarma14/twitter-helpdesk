@@ -64,14 +64,18 @@ const filterTweets = async (event) => {
   if (!event) return;
   if (isMentionedTweet(event)) {
     const tweet = event.tweet_create_events[0];
-    user = await new Tweet({
-      userId: event.for_user_id,
-      tweetId: tweet.id_str,
-      text: tweet.text,
-      timestamp: new Date(tweet.timestamp_ms * 1000),
-      inReplyToStatusId: tweet.in_reply_to_status_id_str,
-      inReplyToUserId: tweet.in_reply_to_user_id_str,
-    }).save();
+    try {
+      user = await new Tweet({
+        userId: event.for_user_id,
+        tweetId: tweet.id_str,
+        text: tweet.text,
+        timestamp: new Date(tweet.timestamp_ms * 1000),
+        inReplyToStatusId: tweet.in_reply_to_status_id_str,
+        inReplyToUserId: tweet.in_reply_to_user_id_str,
+      }).save();
+    } catch (error) {
+      console.log('Error saving tweet', error);
+    }
   }
 };
 
