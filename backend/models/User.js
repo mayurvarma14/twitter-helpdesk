@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
       iv: String,
       content: String,
     },
+    isRegistered: Boolean,
   },
   { timestamps: true }
 );

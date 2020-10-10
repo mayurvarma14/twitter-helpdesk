@@ -21,7 +21,8 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-twitter": "^1.0.4",
-    "twit": "^2.2.11"
+    "twit": "^2.2.11",
+    "twitter-autohook": "^1.7.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

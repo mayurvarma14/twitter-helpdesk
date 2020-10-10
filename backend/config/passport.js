@@ -3,6 +3,8 @@ const { Strategy: TwitterStrategy } = require('passport-twitter');
 
 const User = require('../models/User');
 const { encrypt } = require('../utils/crypto');
+const twit = require('../utils/twit');
+const webhook = require('../utils/webhook');
 
 // Serialize User
 passport.serializeUser((user, done) => {
@@ -48,29 +50,51 @@ passport.use(
           screenName: screen_name,
           location,
           profileImage: profile_image_url_https,
+          isRegistered: true,
           token: encrypt(token),
           tokenSecret: encrypt(tokenSecret),
         }).save();
       }
-      // var Twit = require('twit');
+      twit.setAuth({
+        access_token: token,
+        access_token_secret: tokenSecret,
+      });
+      twit.get('statuses/mentions_timeline', {}, function(err, data, response) {
+        console.log(data);
+      });
 
-      // var T = new Twit({
-      //   consumer_key: process.env.TWITTER_CONSUMER_KEY,
-      //   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-      //   access_token: token,
-      //   access_token_secret: tokenSecret,
-      // });
+      // const { Autohook } = require('twitter-autohook');
 
-      //
-      //  tweet 'hello world!'
-      //
-      // T.post('statuses/update', { status: 'hello world!' }, function(
-      //   err,
-      //   data,
-      //   response
-      // ) {
-      //   console.log(data);
-      // });
+      try {
+        // const webhook = new Autohook({
+        //   token,
+        //   token_secret: tokenSecret,
+        //   env: 'dev',
+        //   port: 5001,
+        // });
+        webhook.setAuth({ token, token_secret: tokenSecret });
+        // Removes existing webhooks
+        // await webhook.removeWebhooks();
+
+        // Starts a server and adds a new webhook
+        // await webhook.start();
+
+        // Listens to incoming activity
+        webhook.on('event', (event) => {
+          if (event.tweet_create_events) {
+            console.log('Something happened:', event);
+          }
+        });
+
+        // Subscribes to your own user's activity
+        await webhook.subscribe({
+          oauth_token: token,
+          oauth_token_secret: tokenSecret,
+        });
+      } catch (e) {
+        // Display the error and quit
+        console.error(e);
+      }
       done(null, user);
     }
   )
