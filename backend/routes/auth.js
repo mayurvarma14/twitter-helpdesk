@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { validateWebhook, validateSignature } = require('twitter-autohook');
+const url = require('url');
 
 const { decrypt } = require('../utils/crypto');
 const router = express.Router();
@@ -28,21 +29,16 @@ router.get('/twitter/webhook', function(req, res, next) {
       env: process.env.TWITTER_WEBHOOK_ENV,
     };
     try {
-      if (
-        !validateSignature(
-          req.headers,
-          auth,
-          require('url').parse(req.url).query
-        )
-      ) {
-        console.error('Cannot validate webhook signature');
+      if (!validateSignature(req.headers, auth, url.parse(req.url).query)) {
         throw new Error('Cannot validate webhook signature');
       }
     } catch (e) {
+      console.error('Cannot validate webhook signature');
       console.error(e);
       return next(e);
     }
 
+    console.log('Log: validateWebhook');
     const crc = validateWebhook(req.query.crc_token, auth, res);
     res.json(JSON.stringify(crc));
   }
@@ -57,7 +53,7 @@ router.post('/twitter/webhook', function(req, res, next) {
     env: process.env.TWITTER_WEBHOOK_ENV,
   };
   try {
-    if (!validateSignature(req.headers, auth, body)) {
+    if (!validateSignature(req.headers, auth, req.body)) {
       console.error('Cannot validate webhook signature');
       throw new Error('Cannot validate webhook signature');
     }
