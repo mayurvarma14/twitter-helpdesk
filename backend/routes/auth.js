@@ -58,7 +58,7 @@ const isMentionedTweet = (event) =>
   event &&
   event.tweet_create_events &&
   event.tweet_create_events.length &&
-  event.tweet_create_events.entities.user_mentions.length;
+  event.tweet_create_events[0].entities.user_mentions.length;
 
 const filterTweets = async (event) => {
   if (!event) return;
