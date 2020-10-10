@@ -75,7 +75,7 @@ passport.use(
 
         // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
-        await webhook.removeWebhooks();
+        // await webhook.removeWebhooks();
 
         // Starts a server and adds a new webhook
 

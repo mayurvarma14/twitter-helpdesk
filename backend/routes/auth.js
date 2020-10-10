@@ -66,6 +66,7 @@ router.post('/twitter/webhook', function(req, res, next) {
     env: process.env.TWITTER_WEBHOOK_ENV,
   };
   try {
+    console.log('Log: validateSignature');
     if (!validateSignature(req.headers, auth, req.body)) {
       console.error('Cannot validate webhook signature');
       throw new Error('Cannot validate webhook signature');
@@ -75,7 +76,7 @@ router.post('/twitter/webhook', function(req, res, next) {
     return next(e);
   }
   console.log('Event received:', body);
-  es.status(200).end();
+  res.status(200).end();
 });
 
 module.exports = router;
