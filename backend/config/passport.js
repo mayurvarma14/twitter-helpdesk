@@ -72,12 +72,16 @@ passport.use(
           env: 'dev',
           port: 5001,
         });
+        console.log('Log: tokenSecret', tokenSecret);
+        console.log('Log: token', token);
         // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
         await webhook.removeWebhooks();
 
         // Starts a server and adds a new webhook
-        await webhook.start();
+        await webhook.start(
+          'https://twitter-helpdesk-app.herokuapp.com/webhook'
+        );
 
         // Listens to incoming activity
         webhook.on('event', (event) => {
