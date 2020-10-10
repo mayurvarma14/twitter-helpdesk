@@ -24,8 +24,8 @@ router.get('/twitter/webhook', function(req, res, next) {
     let auth;
     try {
       auth = {
-        token: decrypt(req.user.token),
-        token_secret: decrypt(req.user.tokenSecret),
+        token: process.env.TWITTER_ACCESS_TOKEN,
+        token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
         consumer_key: process.env.TWITTER_CONSUMER_KEY,
         consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
         env: process.env.TWITTER_WEBHOOK_ENV,
@@ -55,8 +55,8 @@ router.get('/twitter/webhook', function(req, res, next) {
 
 router.post('/twitter/webhook', function(req, res, next) {
   const auth = {
-    token: decrypt(req.user.token),
-    token_secret: decrypt(req.user.tokenSecret),
+    token: process.env.TWITTER_ACCESS_TOKEN,
+    token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     env: process.env.TWITTER_WEBHOOK_ENV,
