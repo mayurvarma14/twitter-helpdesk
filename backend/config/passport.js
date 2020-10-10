@@ -79,9 +79,7 @@ passport.use(
 
         // Starts a server and adds a new webhook
 
-        await webhook.start(
-          'https://twitter-helpdesk-app.herokuapp.com/auth/twitter/webhook'
-        );
+        await webhook.start(process.env.TWITTER_WEBHOOK_URL);
 
         // Listens to incoming activity
         webhook.on('event', (event) => {

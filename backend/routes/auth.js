@@ -48,4 +48,25 @@ router.get('/twitter/webhook', function(req, res, next) {
   }
 });
 
+router.post('/twitter/webhook', function(req, res, next) {
+  const auth = {
+    token: decrypt(req.user.token),
+    token_secret: decrypt(req.user.tokenSecret),
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    env: process.env.TWITTER_WEBHOOK_ENV,
+  };
+  try {
+    if (!validateSignature(req.headers, auth, body)) {
+      console.error('Cannot validate webhook signature');
+      throw new Error('Cannot validate webhook signature');
+    }
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+  console.log('Event received:', body);
+  es.status(200).end();
+});
+
 module.exports = router;
