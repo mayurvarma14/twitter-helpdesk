@@ -1,5 +1,6 @@
 const passport = require('passport');
 const { Strategy: TwitterStrategy } = require('passport-twitter');
+const { Autohook } = require('twitter-autohook');
 
 const User = require('../models/User');
 const { encrypt } = require('../utils/crypto');
@@ -63,19 +64,15 @@ passport.use(
         console.log(data);
       });
 
-      const { Autohook } = require('twitter-autohook');
-
       try {
         const webhook = new Autohook({
           token,
           token_secret: tokenSecret,
-          env: 'dev',
-          port: 5001,
         });
 
         // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
-        await webhook.removeWebhooks();
+        await webhook.removeWebhook(webhook);
 
         // Starts a server and adds a new webhook
 
@@ -83,8 +80,8 @@ passport.use(
 
         // Listens to incoming activity
         webhook.on('event', (event) => {
+          console.log('Something happened:', event);
           if (event.tweet_create_events) {
-            console.log('Something happened:', event);
           }
         });
 
