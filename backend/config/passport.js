@@ -72,8 +72,7 @@ passport.use(
           env: 'dev',
           port: 5001,
         });
-        console.log('Log: tokenSecret', tokenSecret);
-        console.log('Log: token', token);
+
         // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
         await webhook.removeWebhooks();
