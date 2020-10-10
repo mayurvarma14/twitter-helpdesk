@@ -20,16 +20,23 @@ router.get(
 router.get('/twitter/webhook', function(req, res, next) {
   if (req.query.crc_token) {
     console.log('Log: req.query.crc_token', req.query.crc_token);
-
-    const auth = {
-      token: decrypt(req.user.token),
-      token_secret: decrypt(req.user.tokenSecret),
-      consumer_key: process.env.TWITTER_CONSUMER_KEY,
-      consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-      env: process.env.TWITTER_WEBHOOK_ENV,
-    };
+    console.log('Log: req.user', req.user);
+    let auth;
     try {
+      auth = {
+        token: decrypt(req.user.token),
+        token_secret: decrypt(req.user.tokenSecret),
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+        env: process.env.TWITTER_WEBHOOK_ENV,
+      };
+    } catch (error) {
+      console.log('Log: error auth', error);
+    }
+    try {
+      console.log('Log: validateSignature');
       if (!validateSignature(req.headers, auth, url.parse(req.url).query)) {
+        console.log('Log: validateSignature error');
         throw new Error('Cannot validate webhook signature');
       }
     } catch (e) {
@@ -41,6 +48,8 @@ router.get('/twitter/webhook', function(req, res, next) {
     console.log('Log: validateWebhook');
     const crc = validateWebhook(req.query.crc_token, auth, res);
     res.json(JSON.stringify(crc));
+  } else {
+    res.end();
   }
 });
 
