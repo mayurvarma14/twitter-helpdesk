@@ -78,8 +78,9 @@ passport.use(
         await webhook.removeWebhooks();
 
         // Starts a server and adds a new webhook
+
         await webhook.start(
-          'https://twitter-helpdesk-app.herokuapp.com/webhook'
+          'https://twitter-helpdesk-app.herokuapp.com/aut/twitter/webhook'
         );
 
         // Listens to incoming activity

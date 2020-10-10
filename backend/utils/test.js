@@ -15,13 +15,21 @@
 //   http
 //     .createServer((req, res) => {
 //       const route = url.parse(req.url, true);
+//       console.log('Log: route', route);
 
 //       if (!route.pathname) {
 //         return;
 //       }
 
 //       if (route.query.crc_token) {
+//         console.log('Log: route.query.crc_token', route.query.crc_token);
 //         try {
+//           console.log('Log: req.headers', req.headers);
+//           console.log('Log: auth', auth);
+//           console.log(
+//             'Log:  url.parse(req.url).query)',
+//             url.parse(req.url).query
+//           );
 //           if (!validateSignature(req.headers, auth, url.parse(req.url).query)) {
 //             console.error('Cannot validate webhook signature');
 //             return;
@@ -45,6 +53,7 @@
 //         });
 //         req.on('end', () => {
 //           try {
+//             console.log('Log: req.headers', req.headers);
 //             if (!validateSignature(req.headers, auth, body)) {
 //               console.error('Cannot validate webhook signature');
 //               return;
@@ -67,8 +76,8 @@
 //     if (NGROK_AUTH_TOKEN) {
 //       await ngrok.authtoken(process.env.NGROK_AUTH_TOKEN);
 //     }
-//     const url = await ngrok.connect(PORT);
-//     const webhookURL = `${url}/standalone-server/webhook`;
+//     // const url = await ngrok.connect(PORT);
+//     const webhookURL = `https://twitter-helpdesk-app.herokuapp.com/webhook`;
 
 //     const config = {
 //       token: process.env.TWITTER_ACCESS_TOKEN,
@@ -94,6 +103,6 @@
 //     });
 //   } catch (e) {
 //     console.error(e);
-//     process.exit(-1);
+//     // process.exit(-1);
 //   }
 // })();
