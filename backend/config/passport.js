@@ -72,7 +72,7 @@ passport.use(
           env: 'dev',
           port: 5001,
         });
-        webhook.setAuth({ token, token_secret: tokenSecret });
+        // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
         await webhook.removeWebhooks();
 
