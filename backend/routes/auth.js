@@ -47,8 +47,12 @@ router.get('/twitter/webhook', function(req, res, next) {
 
     console.log('Log: validateWebhook');
     const crc = validateWebhook(req.query.crc_token, auth, res);
-    res.json(JSON.stringify(crc));
+    console.log('Log: done validateWebhook');
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify(crc));
+    // res.json(JSON.stringify(crc));
   } else {
+    console.log('end auth!!!');
     res.end();
   }
 });
