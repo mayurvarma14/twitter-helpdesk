@@ -67,7 +67,7 @@ router.post('/twitter/webhook', function(req, res, next) {
   };
   try {
     console.log('Log: validateSignature');
-    if (!validateSignature(req.headers, auth, req.body)) {
+    if (!validateSignature(req.headers, auth, req.rawBody)) {
       console.error('Cannot validate webhook signature');
       throw new Error('Cannot validate webhook signature');
     }
@@ -75,7 +75,7 @@ router.post('/twitter/webhook', function(req, res, next) {
     console.error(e);
     return next(e);
   }
-  console.log('Event received:', body);
+  console.log('Event received:', req.body);
   res.status(200).end();
 });
 
