@@ -4,7 +4,7 @@ const { Strategy: TwitterStrategy } = require('passport-twitter');
 const User = require('../models/User');
 const { encrypt } = require('../utils/crypto');
 const twit = require('../utils/twit');
-const webhook = require('../utils/webhook');
+// const webhook = require('../utils/webhook');
 
 // Serialize User
 passport.serializeUser((user, done) => {
@@ -63,21 +63,21 @@ passport.use(
         console.log(data);
       });
 
-      // const { Autohook } = require('twitter-autohook');
+      const { Autohook } = require('twitter-autohook');
 
       try {
-        // const webhook = new Autohook({
-        //   token,
-        //   token_secret: tokenSecret,
-        //   env: 'dev',
-        //   port: 5001,
-        // });
+        const webhook = new Autohook({
+          token,
+          token_secret: tokenSecret,
+          env: 'dev',
+          port: 5001,
+        });
         webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
-        // await webhook.removeWebhooks();
+        await webhook.removeWebhooks();
 
         // Starts a server and adds a new webhook
-        // await webhook.start();
+        await webhook.start();
 
         // Listens to incoming activity
         webhook.on('event', (event) => {
