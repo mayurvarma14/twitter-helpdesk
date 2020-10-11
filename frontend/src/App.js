@@ -6,7 +6,7 @@ function App() {
     <div className="container">
       <aside className="sidebar"></aside>
       <div className="main">
-        <header className="header">
+        <header className="main-header">
           <span>Updates</span>
           <span>Session: 34 minutes</span>
           <span>User: Ann Tsibulski</span>
