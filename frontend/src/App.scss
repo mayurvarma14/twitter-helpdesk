@@ -8,9 +8,56 @@
     flex-direction: column;
   }
 }
+.profile {
+  border-radius: 15px;
+}
 .sidebar {
   background: #f7f7f3;
+  display: flex;
+  flex-direction: column;
   width: 64px;
+  align-items: center;
+  justify-content: space-between;
+  color: #828282;
+  font-size: 18px;
+  .sidebar-top {
+    img {
+      width: 40px;
+    }
+    margin-top: 40px;
+  }
+  .sidebar-center {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-around;
+    top: 100px;
+    position: absolute;
+    i {
+      width: 64px;
+      display: flex;
+      justify-content: center;
+      height: 60px;
+      align-items: center;
+      &:hover,
+      &.active {
+        background: #e5e4e0;
+        color: black;
+      }
+    }
+  }
+  .sidebar-bottom {
+    display: flex;
+    height: 8%;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 49px;
+    flex-direction: column;
+    img {
+      width: 26px;
+    }
+  }
 }
 
 .main-header {
