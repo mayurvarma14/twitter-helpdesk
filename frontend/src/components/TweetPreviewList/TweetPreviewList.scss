@@ -1,0 +1,18 @@
+.conversation-left {
+  width: 22%;
+  flex-direction: column;
+  display: flex;
+  margin: 0 10px;
+}
+
+.conversation-list {
+  .profile-image {
+    width: 18%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

@@ -14,17 +14,12 @@
 
 .main-container {
   display: flex;
-  margin-top: 38px;
+  margin-top: 30px;
   min-height: 700px;
-  .conversation-left {
-    width: 22%;
-    flex-direction: column;
-    display: flex;
-    margin: 0 10px;
-  }
+
   .conversation-section {
     display: flex;
-    width: 100%;
+    // width: 100%;
     margin-left: 12px;
   }
   .conversation-section-main {
@@ -39,5 +34,5 @@
   }
 }
 img {
-  width: 100px;
+  width: 26px;
 }
