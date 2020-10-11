@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  .main {
+    display: flex;
+    width: 83%;
+    margin: auto;
+    flex-direction: column;
+  }
+}
+.sidebar {
+  width: 64px;
+}
+
+.header {
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 10px;
+}
+.top {
+  display: flex;
+  margin-top: 68px;
+  justify-content: flex-start;
+}
+.main-container {
+  display: flex;
+  margin-top: 38px;
+  .conversation-left {
+    width: 22%;
+    flex-direction: column;
+    display: flex;
+    margin: 0 10px;
+  }
+  .conversation-section {
+    display: flex;
+    width: 100%;
+    margin-left: 12px;
+  }
+  .conversation-section-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .conversation-section-left {
+    width: 31%;
+    display: flex;
+    flex-direction: column;
+  }
+}
