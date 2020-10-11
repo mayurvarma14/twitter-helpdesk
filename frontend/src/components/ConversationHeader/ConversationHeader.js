@@ -13,11 +13,14 @@ function ConversationHeader() {
           <i class="fas fa-sliders-h"></i>Filter
         </button>
       </div>
-      <select name="status" id="status">
-        <option value="Online">Online</option>
-        <option value="Offline">Offline</option>
-        <option value="Busy">Busy</option>
-      </select>
+      <div className="dropdown">
+        <select name="status" id="status">
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+          <option value="Busy">Busy</option>
+        </select>
+        <span className="status-icon"></span>
+      </div>
     </div>
   );
 }
