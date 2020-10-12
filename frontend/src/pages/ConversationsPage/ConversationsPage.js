@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import ConversationHeader from '../../components/ConversationHeader/ConversationHeader';
 import TweetPreviewList from '../../components/TweetPreviewList/TweetPreviewList';
 import ConversationProfileBar from '../../components/ConversationProfileBar/ConversationProfileBar';
+import './ConversationsPage.scss';
 
 class ConversationsPage extends Component {
   render() {
@@ -13,9 +15,14 @@ class ConversationsPage extends Component {
           <div className="conversation-section">
             <div className="conversation-section-main">
               <div className="header">
-                <div className="profile-image"></div>
-                <span className="room"></span>
-                <span className="date"></span>
+                <div className="profile-info">
+                  <img src="/profile.jpg" alt="profile" className="profile" />
+                  <span className="name">
+                    Ea Tipene <span className="status-icon"></span>
+                  </span>
+                </div>
+                <span className="room">Room: 102</span>
+                <span className="date">Oct 1 - Oct 12</span>
                 <button>Create a task</button>
               </div>
               <div className="content">

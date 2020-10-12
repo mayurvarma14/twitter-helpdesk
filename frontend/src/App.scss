@@ -16,24 +16,6 @@
   display: flex;
   margin-top: 30px;
   min-height: 700px;
-
-  .conversation-section {
-    display: flex;
-    flex: 0 0 75%;
-    margin-left: 12px;
-    border: 1px solid #dcdcdc;
-    border-radius: 6px;
-    .conversation-section-main {
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 69%;
-    }
-  }
-  .conversation-section-left {
-    width: 31%;
-    display: flex;
-    flex-direction: column;
-  }
 }
 img {
   width: 26px;
