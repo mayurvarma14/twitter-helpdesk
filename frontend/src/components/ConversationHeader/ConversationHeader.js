@@ -7,11 +7,11 @@ function ConversationHeader() {
       <div className="conversation-header-left">
         <span className="page-title">Conversations</span>
         <div className="search-box">
-          <i class="fas fa-search"></i>
+          <i className="fas fa-search"></i>
           <input type="text" placeholder="Quick search" />
         </div>
         <button>
-          <i class="fas fa-sliders-h"></i>Filter
+          <i className="fas fa-sliders-h"></i>Filter
         </button>
       </div>
       <div className="dropdown">
