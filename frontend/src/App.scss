@@ -9,7 +9,7 @@
   }
 }
 .profile {
-  border-radius: 15px;
+  border-radius: 100px;
 }
 
 .main-container {
@@ -19,13 +19,15 @@
 
   .conversation-section {
     display: flex;
-    // width: 100%;
+    flex: 0 0 75%;
     margin-left: 12px;
-  }
-  .conversation-section-main {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    .conversation-section-main {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 69%;
+    }
   }
   .conversation-section-left {
     width: 31%;

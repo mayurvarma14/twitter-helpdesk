@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ConversationProfile.scss';
 
 class ConversationProfileBar extends Component {
   render() {
@@ -7,7 +8,7 @@ class ConversationProfileBar extends Component {
         <span className="cross-button">
           <i class="fas fa-times"></i>
         </span>
-        <img src="/profile.jpg" alt="profile image2" />
+        <img src="/profile.jpg" alt="profile" className="profile" />
         <span className="name">Ea Tipene</span>
         <span className="status">Online</span>
         <div className="buttons">
@@ -18,10 +19,21 @@ class ConversationProfileBar extends Component {
             <i class="fas fa-envelope"></i>Email
           </button>
         </div>
-        <div className="info">
-          <div className="title"></div>
-          <div className="value"></div>
+        <div className="info-container">
+          <div className="info">
+            <div className="title">Room</div>
+            <div className="value">102</div>
+          </div>
+          <div className="info">
+            <div className="title">Category</div>
+            <div className="value">Standard</div>
+          </div>
+          <div className="info">
+            <div className="title">Company</div>
+            <div className="value">Canada</div>
+          </div>
         </div>
+
         <div className="tasks">
           <div className="header">
             <span>Tasks</span>

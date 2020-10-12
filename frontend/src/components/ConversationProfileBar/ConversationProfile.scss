@@ -1,0 +1,73 @@
+.conversation-section-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid #dcdcdc;
+  .cross-button {
+    align-self: flex-end;
+    margin: 7px 19px;
+    color: #7c7b77;
+    font-size: 12px;
+    background: #f5f7f2;
+    border-radius: 15px;
+    width: 22px;
+    height: 24px;
+    text-align: center;
+    i {
+      line-height: 2;
+    }
+  }
+  img {
+    width: 90px;
+  }
+  .name {
+    color: #3c3c3c;
+    font-size: 15px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  .status {
+    font-size: 12px;
+    color: #02d23a;
+    margin-top: 6px;
+  }
+  .buttons {
+    margin-top: 10px;
+    button {
+      font-size: 12px;
+      background: #f5f7f2;
+      border-radius: 15px;
+      border: none;
+      width: 64px;
+      height: 25px;
+      margin-right: 12px;
+      i {
+        margin-right: 3px;
+      }
+    }
+  }
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 76%;
+
+    font-size: 12px;
+    font-weight: 500;
+    .info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      .title {
+        color: darkgrey;
+      }
+      .value {
+        color: #3c3c3c;
+      }
+    }
+  }
+  .tasks {
+    margin-top: 225px;
+    border-top: 1px solid #dcdcdc;
+  }
+}
