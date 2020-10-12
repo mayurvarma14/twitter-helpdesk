@@ -7,6 +7,13 @@
     margin-bottom: 8px;
     display: flex;
     padding: 10px 8px;
+    cursor: pointer;
+    &:hover {
+      background: whitesmoke;
+    }
+    &.active {
+      background: #f7f7f2;
+    }
     .content {
       display: flex;
       flex-direction: column;

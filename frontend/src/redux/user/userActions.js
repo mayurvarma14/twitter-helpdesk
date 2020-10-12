@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { SET_CURRENT_USER, IS_LOADING, SET_LOGGED_IN } from './userTypes';
+import { getConversations } from './../tweet/tweetActions';
 
 export const getLoggedInUser = () => async (dispatch) => {
   try {
@@ -14,9 +15,9 @@ export const getLoggedInUser = () => async (dispatch) => {
     dispatch({ type: SET_CURRENT_USER, payload: data });
     if (Object.keys(data)) {
       dispatch({ type: SET_LOGGED_IN, payload: true });
+      dispatch(getConversations());
     }
     dispatch({ type: IS_LOADING, payload: false });
-    console.log('Log: ConversationsPage -> componentDidMount -> user', data);
   } catch (error) {
     console.error('Error fetching user', error);
   }

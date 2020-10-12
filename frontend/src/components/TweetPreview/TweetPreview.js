@@ -1,9 +1,20 @@
 import React from 'react';
 import './TweetPreview.scss';
 
-function TweetPreview({ image, name, notification, text, status }) {
+function TweetPreview({
+  image,
+  name,
+  notification,
+  text,
+  status,
+  selectConversation,
+  isActive,
+}) {
   return (
-    <div className="item">
+    <div
+      className={`item ${isActive ? 'active' : ''}`}
+      onClick={selectConversation}
+    >
       <div className="profile-image">
         <img src={image} alt="profile pic" className="profile" />
       </div>

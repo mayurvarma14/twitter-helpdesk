@@ -4,7 +4,13 @@
   display: flex;
   margin: 0 10px;
 }
-
+.conversation-loader {
+  flex: 0 0 22%;
+  flex-direction: column;
+  svg {
+    width: 100px;
+  }
+}
 .conversation-list {
   .profile-image {
     width: 18%;
