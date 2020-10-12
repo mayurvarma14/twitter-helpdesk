@@ -5,7 +5,6 @@ const { Autohook } = require('twitter-autohook');
 const User = require('../models/User');
 const { encrypt } = require('../utils/crypto');
 const twit = require('../utils/twit');
-// const webhook = require('../utils/webhook');
 
 // Serialize User
 passport.serializeUser((user, done) => {
@@ -56,13 +55,13 @@ passport.use(
           tokenSecret: encrypt(tokenSecret),
         }).save();
       }
-      twit.setAuth({
-        access_token: token,
-        access_token_secret: tokenSecret,
-      });
-      twit.get('statuses/mentions_timeline', {}, function(err, data, response) {
-        console.log(data);
-      });
+      // twit.setAuth({
+      //   access_token: token,
+      //   access_token_secret: tokenSecret,
+      // });
+      // twit.get('statuses/mentions_timeline', {}, function(err, data, response) {
+      //   console.log(data);
+      // });
 
       try {
         const webhook = new Autohook({
@@ -70,20 +69,12 @@ passport.use(
           token_secret: tokenSecret,
         });
 
-        // webhook.setAuth({ token, token_secret: tokenSecret });
         // Removes existing webhooks
         await webhook.removeWebhooks();
 
         // Starts a server and adds a new webhook
 
         await webhook.start(process.env.TWITTER_WEBHOOK_URL);
-
-        // Listens to incoming activity
-        webhook.on('event', (event) => {
-          console.log('Something happened:', event);
-          if (event.tweet_create_events) {
-          }
-        });
 
         // Subscribes to your own user's activity
         await webhook.subscribe({

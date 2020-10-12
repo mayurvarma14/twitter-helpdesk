@@ -11,6 +11,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const tweetRouter = require('./routes/tweet');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 
@@ -79,6 +80,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
+app.use('/tweet', tweetRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

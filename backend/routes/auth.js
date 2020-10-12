@@ -71,6 +71,7 @@ const filterTweets = async (event) => {
       user = await new Tweet({
         userId: event.for_user_id,
         tweetId: tweet.id_str,
+        from: tweet.user.id_str,
         text: tweet.text,
         timestamp: new Date(tweet.timestamp_ms * 1000),
         inReplyToStatusId: tweet.in_reply_to_status_id_str,

@@ -5,6 +5,7 @@ const tweetSchema = new Schema(
   {
     userId: String,
     tweetId: String,
+    from: String,
     text: String,
     timestamp: Date,
     inReplyToStatusId: String,
