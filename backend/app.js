@@ -33,7 +33,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
-var allowedOrigins = ['http://127.0.0.1:3000'];
+var allowedOrigins = [
+  'http://127.0.0.1:3000',
+  'https://twitter-helpdesk-webapp.herokuapp.com',
+];
 app.use(
   cors({
     origin: function(origin, callback) {
