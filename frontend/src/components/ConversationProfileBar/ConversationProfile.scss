@@ -69,5 +69,27 @@
   .tasks {
     margin-top: 225px;
     border-top: 1px solid #dcdcdc;
+    font-size: 12px;
+    font-weight: 500;
+    color: #3c3c3c;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 21px;
+      margin-top: 12px;
+      span {
+        color: darkgrey;
+      }
+      i {
+        color: #3c3c3c;
+      }
+    }
+    .item {
+      margin: 14px 25px;
+      display: flex;
+      span {
+        margin-left: 10px;
+      }
+    }
   }
 }
