@@ -4,6 +4,7 @@ const { validateWebhook, validateSignature } = require('twitter-autohook');
 const url = require('url');
 
 const Tweet = require('../models/Tweet');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -68,7 +69,7 @@ const filterTweets = async (event) => {
   if (isMentionedTweet(event)) {
     const tweet = event.tweet_create_events[0];
     try {
-      user = await new Tweet({
+      await new Tweet({
         userId: event.for_user_id,
         tweetId: tweet.id_str,
         from: tweet.user.id_str,
@@ -77,6 +78,16 @@ const filterTweets = async (event) => {
         inReplyToStatusId: tweet.in_reply_to_status_id_str,
         inReplyToUserId: tweet.in_reply_to_user_id_str,
       }).save();
+      const user = await User.findOne({ twitterId: tweet.user.id_str });
+      if (!user) {
+        await new User({
+          twitterId: tweet.user.id_str,
+          name: tweet.user.name,
+          screenName: tweet.user.screen_name,
+          location: tweet.user.location,
+          profileImage: tweet.user.profile_image_url_https,
+        }).save();
+      }
     } catch (error) {
       console.log('Error saving tweet', error);
     }
