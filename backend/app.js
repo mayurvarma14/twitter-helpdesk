@@ -62,18 +62,20 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 1209600000, httpOnly: false, sameSite: 'none' }, // two weeks in milliseconds
-    store: new MongoStore({
-      url: process.env.MONGODB_URI,
-      autoReconnect: true,
-    }),
-  })
-);
+const sessionConfig = {
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 1209600000, httpOnly: false, sameSite: 'none' }, // two weeks in milliseconds
+  store: new MongoStore({
+    url: process.env.MONGODB_URI,
+    autoReconnect: true,
+  }),
+};
+if (process.env.NODE_ENV === 'production') {
+  sessionConfig.cookie.secure = true;
+}
+app.use(session(sessionConfig));
 
 //  Initialize Passport
 app.use(passport.initialize());
