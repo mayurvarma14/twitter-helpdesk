@@ -25,15 +25,56 @@ class ConversationsPage extends Component {
                 <span className="date">Oct 1 - Oct 12</span>
                 <button>Create a task</button>
               </div>
-              <div className="content">
+              <div className="conversation-content">
                 <span className="date">Today</span>
                 <div className="conversations">
                   <div className="item">
-                    <div className="profile-image"></div>
-                    <div className="content">
-                      <div className="text"></div>
+                    <div className="profile-pic">
+                      <img
+                        src="/profile.jpg"
+                        alt="profile"
+                        className="profile"
+                      />
                     </div>
-                    <div className="time"></div>
+                    <div className="content">
+                      <div className="text">
+                        Sorry for inconvenience. I am sending out manager Maria
+                        Peterson to your room 102
+                      </div>
+                    </div>
+                    <div className="time">10:35</div>
+                  </div>
+                  <div className="item">
+                    <div className="profile-pic">
+                      <img
+                        src="/profile.jpg"
+                        alt="profile"
+                        className="profile"
+                      />
+                    </div>
+                    <div className="content">
+                      <div className="text">
+                        Sorry for inconvenience. I am sending out manager Maria
+                        Peterson to your room 102
+                      </div>
+                    </div>
+                    <div className="time">10:35</div>
+                  </div>
+                  <div className="item">
+                    <div className="profile-pic">
+                      <img
+                        src="/profile.jpg"
+                        alt="profile"
+                        className="profile"
+                      />
+                    </div>
+                    <div className="content">
+                      <div className="text">
+                        Sorry for inconvenience. I am sending out manager Maria
+                        Peterson to your room 102
+                      </div>
+                    </div>
+                    <div className="time">10:35</div>
                   </div>
                 </div>
               </div>

@@ -31,6 +31,7 @@
         }
         .name {
           margin-left: 12px;
+          color: #3c3c3c;
         }
         img {
           width: 22px;
@@ -44,6 +45,36 @@
         height: 24px;
         &:focus {
           outline: none;
+        }
+      }
+    }
+    .conversation-content {
+      padding: 10px 30px;
+      font-size: 12px;
+      font-weight: 500;
+      .date {
+        color: darkgrey;
+        display: inline-block;
+        margin: 10px 40px;
+      }
+      .conversations {
+        display: flex;
+        flex-direction: column;
+        .item {
+          display: flex;
+          margin: 18px 0;
+
+          color: #3c3c3c;
+          .profile-pic {
+            width: 42px;
+            img {
+              width: 22px;
+            }
+          }
+          .time {
+            color: darkgrey;
+            width: 45px;
+          }
         }
       }
     }
