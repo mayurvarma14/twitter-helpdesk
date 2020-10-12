@@ -12,7 +12,7 @@ function TweetPreview({
 }) {
   return (
     <div
-      className={`item ${isActive ? 'active' : ''}`}
+      className={`preview-item ${isActive ? 'active' : ''}`}
       onClick={selectConversation}
     >
       <div className="profile-image">

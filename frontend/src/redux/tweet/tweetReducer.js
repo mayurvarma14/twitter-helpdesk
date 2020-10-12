@@ -9,7 +9,7 @@ const initialState = {
   conversation: [],
   data: [],
   isLoading: true,
-  isConversationLoading: true,
+  isConversationLoading: false,
 };
 
 export default (state = initialState, { type, payload }) => {

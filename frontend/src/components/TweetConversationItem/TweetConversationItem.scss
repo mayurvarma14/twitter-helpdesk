@@ -1,0 +1,19 @@
+.item {
+  display: flex;
+  margin: 18px 0;
+
+  color: #3c3c3c;
+  .content {
+    flex-basis: 90%;
+  }
+  .profile-pic {
+    width: 42px;
+    img {
+      width: 22px;
+    }
+  }
+  .time {
+    color: darkgrey;
+    width: 45px;
+  }
+}

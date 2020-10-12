@@ -1,7 +1,21 @@
+.conversation-main-loader {
+  flex: 0 0 69%;
+  flex-direction: column;
+  svg {
+    width: 100px;
+  }
+}
 .conversation-section-main {
   display: flex;
   flex-direction: column;
   flex: 0 0 69%;
+  .no-data {
+    text-align: center;
+    margin: 100px;
+    font-size: 20px;
+    color: darkgray;
+    font-weight: 500;
+  }
   .header {
     display: flex;
     justify-content: space-between;
@@ -54,22 +68,6 @@
     .conversations {
       display: flex;
       flex-direction: column;
-      .item {
-        display: flex;
-        margin: 18px 0;
-
-        color: #3c3c3c;
-        .profile-pic {
-          width: 42px;
-          img {
-            width: 22px;
-          }
-        }
-        .time {
-          color: darkgrey;
-          width: 45px;
-        }
-      }
     }
   }
 }

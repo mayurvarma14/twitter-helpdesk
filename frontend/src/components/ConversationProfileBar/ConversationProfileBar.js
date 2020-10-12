@@ -4,7 +4,7 @@ import './ConversationProfile.scss';
 
 class ConversationProfileBar extends Component {
   render() {
-    if (this.props.tweet.isLoading) return null;
+    // if (this.props.tweet.isConversationLoading) return null;
     const [
       { from: { name, location, profileImage } = {} } = {},
     ] = this.props.tweet.conversation;
