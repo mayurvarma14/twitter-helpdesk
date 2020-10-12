@@ -66,7 +66,7 @@ const sessionConfig = {
   resave: true,
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
-  cookie: { maxAge: 1209600000, httpOnly: false, sameSite: 'none' }, // two weeks
+  cookie: { maxAge: 1209600000, httpOnly: false }, // two weeks
   store: new MongoStore({
     url: process.env.MONGODB_URI,
     autoReconnect: true,
@@ -75,6 +75,7 @@ const sessionConfig = {
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
   sessionConfig.cookie.secure = true;
+  sessionConfig.cookie.sameSite = 'none';
 }
 app.use(session(sessionConfig));
 
