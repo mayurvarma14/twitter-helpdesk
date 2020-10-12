@@ -1,11 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './Sidebar.scss';
 
-function Sidebar() {
-  const { pathname } = useLocation();
-  if (pathname === '/login') return null;
+function Sidebar({ user }) {
+  if (!user.loggedIn) return null;
   return (
     <aside className="sidebar">
       <div className="sidebar-top">
@@ -21,10 +20,14 @@ function Sidebar() {
       </div>
       <div className="sidebar-bottom">
         <i className="far fa-life-ring"></i>
-        <img src="/profile.jpg" alt="profile image2" className="profile" />
+        <img
+          src={user.data.profileImage}
+          alt="profile image2"
+          className="profile"
+        />
       </div>
     </aside>
   );
 }
 
-export default Sidebar;
+export default connect(({ user }) => ({ user }))(Sidebar);

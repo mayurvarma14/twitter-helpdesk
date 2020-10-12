@@ -21,11 +21,14 @@ router.get(
   '/twitter/callback',
   passport.authenticate('twitter', {
     session: true,
-    successRedirect: '/',
-    failureRedirect: '/login',
+    successRedirect: `${process.env.APP_URL}/conversations`,
+    failureRedirect: `${process.env.APP_URL}/login`,
   })
 );
-
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect(process.env.APP_URL);
+});
 router.get('/twitter/webhook', function(req, res, next) {
   try {
     if (!validateSignature(req.headers, auth, url.parse(req.url).query)) {

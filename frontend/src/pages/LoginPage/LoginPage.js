@@ -4,7 +4,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div>
-        <a href="/auth/login">Login with twitter</a>
+        <a href={`${process.env.REACT_APP_BACKEND_URL}/auth/twitter`}>
+          Login with twitter
+        </a>
       </div>
     );
   }

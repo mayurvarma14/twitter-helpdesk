@@ -6,6 +6,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
@@ -31,6 +32,22 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
+var allowedOrigins = ['http://127.0.0.1:3000'];
+app.use(
+  cors({
+    origin: function(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var msg =
+          'The CORS policy for this site does not ' +
+          'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+  })
+);
 app.use(
   express.json({
     verify: (req, res, buf) => {

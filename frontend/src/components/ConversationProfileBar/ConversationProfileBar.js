@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './ConversationProfile.scss';
 
 class ConversationProfileBar extends Component {
@@ -57,4 +58,4 @@ class ConversationProfileBar extends Component {
   }
 }
 
-export default ConversationProfileBar;
+export default connect(({ user }) => ({ user }))(ConversationProfileBar);

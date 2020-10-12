@@ -1,20 +1,19 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './Header.scss';
 
-function Header() {
-  const { pathname } = useLocation();
-  if (pathname === '/login') return null;
+function Header({ user }) {
+  if (!user.loggedIn) return null;
   return (
     <header className="main-header">
       <span>Updates</span>
       <div className="right-section">
         <span>Session: 34 minutes</span>
-        <span>User: Ann Tsibulski</span>
+        <span>User: {user.data.name}</span>
       </div>
     </header>
   );
 }
 
-export default Header;
+export default connect(({ user }) => ({ user }))(Header);

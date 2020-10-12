@@ -1,11 +1,15 @@
 .container {
   display: flex;
-  height: 100vh;
+  // height: 100vh;
   .main {
     display: flex;
     width: 83%;
     margin: 0 auto;
     flex-direction: column;
+    .loader {
+      height: 88vh;
+      width: 100px;
+    }
   }
 }
 .profile {
