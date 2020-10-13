@@ -11,7 +11,7 @@ class LoginPage extends Component {
             (window.location.href = `${process.env.REACT_APP_BACKEND_URL}/auth/twitter`)
           }
         >
-          Sign in with Twitter
+          <i className="fab fa-twitter"></i>Sign in with Twitter
         </div>
       </div>
     );
