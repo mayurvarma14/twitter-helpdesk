@@ -85,16 +85,15 @@ module.exports = ({ Router, io }) => {
         }).save();
         let user = await User.findOne({ twitterId: tweet.user.id_str });
         if (!user) {
-          user = await new User({
+          await new User({
             twitterId: tweet.user.id_str,
             name: tweet.user.name,
             screenName: tweet.user.screen_name,
             location: tweet.user.location,
             profileImage: tweet.user.profile_image_url_https,
-          })
-            .save()
-            .lean();
+          }).save();
         }
+        user = await User.findOne({ twitterId: tweet.user.id_str }).lean();
         newTweet.from = user;
         callback(newTweet);
       } catch (error) {
