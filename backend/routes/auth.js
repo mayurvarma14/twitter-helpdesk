@@ -91,7 +91,9 @@ module.exports = ({ Router, io }) => {
             screenName: tweet.user.screen_name,
             location: tweet.user.location,
             profileImage: tweet.user.profile_image_url_https,
-          }).save();
+          })
+            .save()
+            .lean();
         }
         newTweet.from = user;
         callback(newTweet);
