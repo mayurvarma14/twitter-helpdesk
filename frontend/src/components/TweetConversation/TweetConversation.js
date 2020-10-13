@@ -59,7 +59,11 @@ class TweetConversation extends Component {
           <div className="conversations">{this.renderList()}</div>
           <div className="reply-box">
             <div className="profile-pic">
-              <img src="/profile.jpg" alt="profile" className="profile" />
+              <img
+                src={this.props.user.data.profileImage}
+                alt="profile"
+                className="profile"
+              />
             </div>
             <input type="text" placeholder="Reply..." />
             <span>
