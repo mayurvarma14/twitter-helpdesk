@@ -76,7 +76,7 @@ const traverseConversation = async (tweetId, twitterId, conversation = []) => {
   if (tweet) {
     const user = await User.findOne({ twitterId: tweet.from }).lean();
     conversation.push({ ...tweet, from: user });
-    traverseConversation(tweet.tweetId, tweet.from, conversation);
+    await traverseConversation(tweet.tweetId, tweet.from, conversation);
   }
   return conversation;
 };
