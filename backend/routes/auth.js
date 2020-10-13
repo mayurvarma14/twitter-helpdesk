@@ -58,7 +58,6 @@ module.exports = ({ Router, io }) => {
     filterTweets(req.body, (data) => {
       req.app.io.emit('tweet', data);
     });
-    req.app.io.emit('tweet', req.body);
     console.log('Event received:', JSON.stringify(req.body, null, 2));
     res.status(200).end();
   });
