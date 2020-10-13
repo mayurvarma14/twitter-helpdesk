@@ -94,6 +94,7 @@ module.exports = ({ Router, io }) => {
           }).save();
         }
         newTweet.from = user;
+        callback(newTweet);
       } catch (error) {
         console.log('Error saving tweet', error);
       }
