@@ -71,10 +71,10 @@ module.exports = ({ Router, io }) => {
   const filterTweets = async (event, callback) => {
     if (!event) return;
     if (isMentionedTweet(event)) {
-      const tweet = event.tweet_create_events[0];
+      let tweet = event.tweet_create_events[0];
 
       try {
-        const newTweet = await new Tweet({
+        await new Tweet({
           userId: event.for_user_id,
           tweetId: tweet.id_str,
           from: tweet.user.id_str,
@@ -94,7 +94,8 @@ module.exports = ({ Router, io }) => {
           }).save();
           user = await User.findOne({ twitterId: tweet.user.id_str }).lean();
         }
-        callback({ ...newTweet, from: user });
+        tweet = await Tweet.findOne({ tweetId: tweet.id_str }).lean();
+        callback({ ...tweet, from: user });
       } catch (error) {
         console.log('Error saving tweet', error);
       }
