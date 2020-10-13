@@ -57,10 +57,21 @@ class TweetConversation extends Component {
         <div className="conversation-content">
           <span className="date">Today</span>
           <div className="conversations">{this.renderList()}</div>
+          <div className="reply-box">
+            <div className="profile-pic">
+              <img src="/profile.jpg" alt="profile" className="profile" />
+            </div>
+            <input type="text" placeholder="Reply..." />
+            <span>
+              <i className="fas fa-paperclip"></i>
+            </span>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default connect(({ tweet }) => ({ tweet }))(TweetConversation);
+export default connect(({ tweet, user }) => ({ tweet, user }))(
+  TweetConversation
+);
