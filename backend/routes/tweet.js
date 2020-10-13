@@ -24,10 +24,15 @@ router.get('/', isAuthenticated, async function(req, res, next) {
 });
 
 router.post('/', isAuthenticated, async function(req, res, next) {
-  twit.setAuth({
-    access_token: decrypt(req.user.token),
-    access_token_secret: decrypt(req.user.tokenSecret),
-  });
+  try {
+    twit.setAuth({
+      access_token: decrypt(req.user.token),
+      access_token_secret: decrypt(req.user.tokenSecret),
+    });
+  } catch (error) {
+    console.log('Set Auth Error', error);
+  }
+  console.log('Log: req.body', req.body);
   twit.post(
     'statuses/update',
     {
@@ -35,6 +40,7 @@ router.post('/', isAuthenticated, async function(req, res, next) {
       in_reply_to_status_id: req.body.to,
     },
     function(err, tweet, response) {
+      console.log('Log: tweet', tweet);
       if (!err) {
         res.json(tweet);
       } else {
