@@ -45,32 +45,31 @@ module.exports = ({ Router, io }) => {
     res.writeHead(200, { 'content-type': 'application/json' });
     res.end(JSON.stringify(crc));
   });
-
-  router.post('/twitter/webhook', function(req, res, next) {
-    try {
-      if (!validateSignature(req.headers, auth, req.rawBody)) {
-        throw new Error('Cannot validate webhook signature');
-      }
-    } catch (e) {
-      console.error(e);
-      return next(e);
-    }
-    filterTweets(req.body);
-    console.log('Event received:', JSON.stringify(req.body, null, 2));
-    res.status(200).end();
-  });
-
-  const isMentionedTweet = (event) =>
-    event &&
-    event.tweet_create_events &&
-    event.tweet_create_events.length &&
-    event.tweet_create_events[0].entities.user_mentions.length;
-
   io.on('connection', function(client) {
     client.on('join', function(data) {
       console.log(data);
     });
     client.emit('tweet', { test: 'test' });
+    router.post('/twitter/webhook', function(req, res, next) {
+      try {
+        if (!validateSignature(req.headers, auth, req.rawBody)) {
+          throw new Error('Cannot validate webhook signature');
+        }
+      } catch (e) {
+        console.error(e);
+        return next(e);
+      }
+      filterTweets(req.body);
+      console.log('Event received:', JSON.stringify(req.body, null, 2));
+      res.status(200).end();
+    });
+
+    const isMentionedTweet = (event) =>
+      event &&
+      event.tweet_create_events &&
+      event.tweet_create_events.length &&
+      event.tweet_create_events[0].entities.user_mentions.length;
+
     const filterTweets = async (event) => {
       if (!event) return;
       if (isMentionedTweet(event)) {
