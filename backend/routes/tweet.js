@@ -36,29 +36,6 @@ router.post('/', isAuthenticated, async function(req, res, next) {
     },
     async function(err, tweet, response) {
       if (!err) {
-        try {
-          await new Tweet({
-            userId: req.user.twitterId,
-            tweetId: tweet.id_str,
-            from: tweet.user.id_str,
-            text: tweet.text,
-            timestamp: new Date(tweet.created_at),
-            inReplyToStatusId: tweet.in_reply_to_status_id_str,
-            inReplyToUserId: tweet.in_reply_to_user_id_str,
-          }).save();
-          const user = await User.findOne({ twitterId: tweet.user.id_str });
-          if (!user) {
-            await new User({
-              twitterId: tweet.user.id_str,
-              name: tweet.user.name,
-              screenName: tweet.user.screen_name,
-              location: tweet.user.location,
-              profileImage: tweet.user.profile_image_url_https,
-            }).save();
-          }
-        } catch (error) {
-          console.log('Error saving tweet', error);
-        }
         res.json(tweet);
       } else {
         console.error(err);
