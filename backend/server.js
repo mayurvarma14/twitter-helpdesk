@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 require('dotenv').config();
-var app = require('../app');
+const express = require('express'),
+  app = express();
 var debug = require('debug')('backend:server');
 var http = require('http');
 
@@ -20,7 +21,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var io = require('socket.io')(server);
+require('./app')({ express, app, io });
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
 import { connect } from 'react-redux';
 
 import { ReactComponent as Loader } from '../../assets/loading.svg';
 import TweetConversationItem from '../TweetConversationItem/TweetConversationItem';
 import { sendReply } from '../../redux/tweet/tweetActions';
-
 import './TweetConversation.scss';
+
+const socket = socketIOClient(process.env.REACT_APP_BACKEND_URL);
+socket.on('connect', function(data) {
+  socket.emit('join', 'Client...');
+});
+socket.on('tweet', function(data) {
+  console.log('tweet', data);
+});
 
 class TweetConversation extends Component {
   state = { reply: '' };

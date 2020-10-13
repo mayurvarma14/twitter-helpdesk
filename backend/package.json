@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "develop": "nodemon ./bin/www"
+    "start": "node server.js",
+    "develop": "nodemon server.js"
   },
   "dependencies": {
     "connect-mongo": "^3.2.0",
@@ -22,6 +22,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-twitter": "^1.0.4",
+    "socket.io": "^2.3.0",
     "twit": "^2.2.11",
     "twitter-autohook": "^1.7.2"
   },
