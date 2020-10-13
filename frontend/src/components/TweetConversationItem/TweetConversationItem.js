@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { removeMention } from '../../utils/textProcessing';
 import './TweetConversationItem.scss';
 
 function TweetConversationItem({ image, text, time }) {
@@ -8,7 +10,7 @@ function TweetConversationItem({ image, text, time }) {
         <img src={image} alt="profile" className="profile" />
       </div>
       <div className="content">
-        <div className="text">{text}</div>
+        <div className="text">{removeMention(text)}</div>
       </div>
       <div className="time">{time}</div>
     </div>

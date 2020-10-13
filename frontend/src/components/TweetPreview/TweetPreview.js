@@ -1,6 +1,7 @@
 import React from 'react';
-import './TweetPreview.scss';
 
+import { removeMention } from '../../utils/textProcessing';
+import './TweetPreview.scss';
 function TweetPreview({
   image,
   name,
@@ -26,7 +27,7 @@ function TweetPreview({
             <span className="notification">{notification}</span>
           ) : null}
         </div>
-        <span className="text">{text}</span>
+        <span className="text">{removeMention(text)}</span>
       </div>
     </div>
   );
