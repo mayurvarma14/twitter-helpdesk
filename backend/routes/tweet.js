@@ -34,7 +34,7 @@ router.post('/', isAuthenticated, async function(req, res, next) {
       status: req.body.text,
       in_reply_to_status_id: req.body.to,
     },
-    async function(err, tweet, response) {
+    function(err, tweet, response) {
       if (!err) {
         res.json(tweet);
       } else {
