@@ -1,0 +1,22 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  .login-title {
+    font-size: 30px;
+    color: gray;
+    font-weight: 500;
+    margin: 100px 0;
+  }
+  .login-button {
+    background: #55acee;
+    height: 30px;
+    width: 300px;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+    padding: 12px 0;
+    color: whitesmoke;
+    cursor: pointer;
+  }
+}
