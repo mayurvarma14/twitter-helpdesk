@@ -4,19 +4,33 @@ import { connect } from 'react-redux';
 
 import { ReactComponent as Loader } from '../../assets/loading.svg';
 import TweetConversationItem from '../TweetConversationItem/TweetConversationItem';
-import { sendReply } from '../../redux/tweet/tweetActions';
+import {
+  sendReply,
+  addTweetConversation,
+  addReply,
+} from '../../redux/tweet/tweetActions';
 import './TweetConversation.scss';
 
 const socket = socketIOClient(process.env.REACT_APP_BACKEND_URL);
-socket.on('connect', function(data) {
-  socket.emit('join', 'Client...');
-});
-socket.on('tweet', function(data) {
-  console.log('tweet', data);
-});
 
 class TweetConversation extends Component {
   state = { reply: '' };
+  componentDidMount() {
+    socket.on('tweet', (tweet) => {
+      const conversation = this.props.tweet.conversation;
+      if (
+        conversation.length &&
+        conversation[conversation.length - 1].inReplyToStatusId ===
+          tweet.tweetId
+      ) {
+        this.props.addReply(tweet);
+      } else if (!tweet.inReplyToStatusId) {
+        this.props.addTweetConversation(tweet);
+      }
+      console.log('tweet', tweet);
+    });
+  }
+
   replyConversation(event) {
     if (event.key === 'Enter') {
       console.log(this.state.reply);
@@ -110,6 +124,8 @@ class TweetConversation extends Component {
   }
 }
 
-export default connect(({ tweet, user }) => ({ tweet, user }), { sendReply })(
-  TweetConversation
-);
+export default connect(({ tweet, user }) => ({ tweet, user }), {
+  sendReply,
+  addTweetConversation,
+  addReply,
+})(TweetConversation);

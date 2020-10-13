@@ -6,6 +6,7 @@ import {
   SET_CONVERSATION,
   IS_LOADING_CONVERSATION,
   SET_REPLY,
+  ADD_TWEET_CONVERSATION,
 } from './tweetTypes';
 
 export const getConversations = () => async (dispatch) => {
@@ -70,4 +71,10 @@ export const sendReply = (text, to) => async (dispatch) => {
   } catch (error) {
     console.error('Error sending reply', error);
   }
+};
+export const addReply = (tweet) => async (dispatch) => {
+  dispatch({ type: SET_REPLY, payload: tweet });
+};
+export const addTweetConversation = (tweet) => async (dispatch) => {
+  dispatch({ type: ADD_TWEET_CONVERSATION, payload: tweet });
 };

@@ -83,7 +83,7 @@ module.exports = ({ Router, io }) => {
           inReplyToStatusId: tweet.in_reply_to_status_id_str,
           inReplyToUserId: tweet.in_reply_to_user_id_str,
         }).save();
-        let user = await User.findOne({ twitterId: tweet.user.id_str });
+        let user = await User.findOne({ twitterId: tweet.user.id_str }).lean();
         if (!user) {
           await new User({
             twitterId: tweet.user.id_str,
@@ -92,10 +92,9 @@ module.exports = ({ Router, io }) => {
             location: tweet.user.location,
             profileImage: tweet.user.profile_image_url_https,
           }).save();
+          user = await User.findOne({ twitterId: tweet.user.id_str }).lean();
         }
-        user = await User.findOne({ twitterId: tweet.user.id_str }).lean();
-        newTweet.from = user;
-        callback(newTweet);
+        callback({ ...newTweet, from: user });
       } catch (error) {
         console.log('Error saving tweet', error);
       }

@@ -4,6 +4,7 @@ import {
   IS_LOADING_CONVERSATIONS,
   IS_LOADING_CONVERSATION,
   SET_REPLY,
+  ADD_TWEET_CONVERSATION,
 } from './tweetTypes';
 
 const initialState = {
@@ -25,6 +26,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, isConversationLoading: payload };
     case SET_REPLY:
       return { ...state, conversation: [...state.conversation, payload] };
+    case ADD_TWEET_CONVERSATION:
+      return { ...state, data: [payload, ...state.data] };
 
     default:
       return state;
