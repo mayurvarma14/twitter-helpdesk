@@ -1,5 +1,4 @@
 module.exports = ({ Router, io }) => {
-  // const express = require('express');
   const passport = require('passport');
   const { validateWebhook, validateSignature } = require('twitter-autohook');
   const url = require('url');
@@ -7,7 +6,6 @@ module.exports = ({ Router, io }) => {
   const Tweet = require('../models/Tweet');
   const User = require('../models/User');
 
-  // const router = express.Router();
   const router = Router();
 
   const auth = {
@@ -20,11 +18,6 @@ module.exports = ({ Router, io }) => {
 
   router.get('/twitter', passport.authenticate('twitter'));
 
-  router.get('/test', function(req, res) {
-    req.app.io.emit('tweet', { test: 'test' });
-    res.json({});
-  });
-
   router.get(
     '/twitter/callback',
     passport.authenticate('twitter', {
@@ -33,10 +26,12 @@ module.exports = ({ Router, io }) => {
       failureRedirect: `${process.env.APP_URL}/login`,
     })
   );
+
   router.get('/logout', (req, res) => {
     req.logout();
     res.redirect(process.env.APP_URL);
   });
+
   router.get('/twitter/webhook', function(req, res, next) {
     try {
       if (!validateSignature(req.headers, auth, url.parse(req.url).query)) {
@@ -50,12 +45,7 @@ module.exports = ({ Router, io }) => {
     res.writeHead(200, { 'content-type': 'application/json' });
     res.end(JSON.stringify(crc));
   });
-  io.on('connection', function(client) {
-    client.on('join', function(data) {
-      console.log(data);
-    });
-    client.emit('tweet', { test: 'test' });
-  });
+
   router.post('/twitter/webhook', function(req, res, next) {
     try {
       if (!validateSignature(req.headers, auth, req.rawBody)) {
@@ -65,8 +55,9 @@ module.exports = ({ Router, io }) => {
       console.error(e);
       return next(e);
     }
-    filterTweets(req.body);
-    req.app.io.emit('tweet', { test: 'test1' });
+    filterTweets(req.body, (data) => {
+      req.app.io.emit('tweet', data);
+    });
     req.app.io.emit('tweet', req.body);
     console.log('Event received:', JSON.stringify(req.body, null, 2));
     res.status(200).end();
@@ -77,7 +68,7 @@ module.exports = ({ Router, io }) => {
     event.tweet_create_events.length &&
     event.tweet_create_events[0].entities.user_mentions.length;
 
-  const filterTweets = async (event) => {
+  const filterTweets = async (event, callback) => {
     if (!event) return;
     if (isMentionedTweet(event)) {
       const tweet = event.tweet_create_events[0];
@@ -103,7 +94,6 @@ module.exports = ({ Router, io }) => {
           }).save();
         }
         newTweet.from = user;
-        console.log('Log: filterTweets -> newTweet', newTweet);
       } catch (error) {
         console.log('Error saving tweet', error);
       }
