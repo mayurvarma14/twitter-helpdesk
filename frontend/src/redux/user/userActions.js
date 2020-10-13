@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
+import history from '../../history';
 
 import { SET_CURRENT_USER, IS_LOADING, SET_LOGGED_IN } from './userTypes';
 import { getConversations } from './../tweet/tweetActions';
@@ -14,14 +14,13 @@ export const getLoggedInUser = () => async (dispatch) => {
     );
 
     dispatch({ type: SET_CURRENT_USER, payload: data });
-    if (Object.keys(data)) {
-      dispatch({ type: SET_LOGGED_IN, payload: true });
-      dispatch(getConversations());
-    } else {
-      browserHistory.push('/login');
-    }
+
+    dispatch({ type: SET_LOGGED_IN, payload: true });
+    dispatch(getConversations());
+
     dispatch({ type: IS_LOADING, payload: false });
   } catch (error) {
+    if ((error.response && error.response.status = 401)) history.push('/login');
     console.error('Error fetching user', error);
   }
 };
