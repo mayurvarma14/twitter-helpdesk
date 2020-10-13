@@ -40,7 +40,10 @@ passport.use(
       // Get user
       let user;
       user = await User.findOne({ twitterId: id_str });
-
+      if (user && !user.isRegistered) {
+        await User.findOneAndRemove({ twitterId: id_str });
+        user = null;
+      }
       // Check if user exists
       if (!user) {
         // Create new user
@@ -55,6 +58,7 @@ passport.use(
           tokenSecret: encrypt(tokenSecret),
         }).save();
       }
+
       // twit.setAuth({
       //   access_token: token,
       //   access_token_secret: tokenSecret,
