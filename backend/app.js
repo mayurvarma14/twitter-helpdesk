@@ -68,7 +68,7 @@ module.exports = ({ express, app, io }) => {
     resave: true,
     saveUninitialized: true,
     secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 1209600000, httpOnly: false }, // two weeks
+    cookie: { maxAge: 1800000, httpOnly: false }, // two weeks
     store: new MongoStore({
       url: process.env.MONGODB_URI,
       autoReconnect: true,
