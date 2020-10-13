@@ -1,10 +1,4 @@
 module.exports = ({ Router, io }) => {
-  io.on('connection', function(client) {
-    client.on('join', function(data) {
-      console.log(data);
-    });
-    client.emit('tweet', { test: 'test' });
-  });
   // const express = require('express');
   const passport = require('passport');
   const { validateWebhook, validateSignature } = require('twitter-autohook');
@@ -72,40 +66,45 @@ module.exports = ({ Router, io }) => {
     event.tweet_create_events.length &&
     event.tweet_create_events[0].entities.user_mentions.length;
 
-  const filterTweets = async (event) => {
-    if (!event) return;
-    if (isMentionedTweet(event)) {
-      const tweet = event.tweet_create_events[0];
+  io.on('connection', function(client) {
+    client.on('join', function(data) {
+      console.log(data);
+    });
+    client.emit('tweet', { test: 'test' });
+    const filterTweets = async (event) => {
+      if (!event) return;
+      if (isMentionedTweet(event)) {
+        const tweet = event.tweet_create_events[0];
 
-      try {
-        const newTweet = await new Tweet({
-          userId: event.for_user_id,
-          tweetId: tweet.id_str,
-          from: tweet.user.id_str,
-          text: tweet.text,
-          timestamp: new Date(tweet.timestamp_ms * 1000),
-          inReplyToStatusId: tweet.in_reply_to_status_id_str,
-          inReplyToUserId: tweet.in_reply_to_user_id_str,
-        }).save();
-        let user = await User.findOne({ twitterId: tweet.user.id_str });
-        if (!user) {
-          user = await new User({
-            twitterId: tweet.user.id_str,
-            name: tweet.user.name,
-            screenName: tweet.user.screen_name,
-            location: tweet.user.location,
-            profileImage: tweet.user.profile_image_url_https,
+        try {
+          const newTweet = await new Tweet({
+            userId: event.for_user_id,
+            tweetId: tweet.id_str,
+            from: tweet.user.id_str,
+            text: tweet.text,
+            timestamp: new Date(tweet.timestamp_ms * 1000),
+            inReplyToStatusId: tweet.in_reply_to_status_id_str,
+            inReplyToUserId: tweet.in_reply_to_user_id_str,
           }).save();
-        }
-        newTweet.from = user;
-        io.on('connection', function(client) {
-          console.log('test..');
+          let user = await User.findOne({ twitterId: tweet.user.id_str });
+          if (!user) {
+            user = await new User({
+              twitterId: tweet.user.id_str,
+              name: tweet.user.name,
+              screenName: tweet.user.screen_name,
+              location: tweet.user.location,
+              profileImage: tweet.user.profile_image_url_https,
+            }).save();
+          }
+          newTweet.from = user;
+
           client.emit('tweet', newTweet);
-        });
-      } catch (error) {
-        console.log('Error saving tweet', error);
+          client.emit('tweet', {});
+        } catch (error) {
+          console.log('Error saving tweet', error);
+        }
       }
-    }
-  };
+    };
+  });
   return router;
 };
