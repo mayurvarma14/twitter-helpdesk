@@ -3,6 +3,7 @@ module.exports = ({ Router, io }) => {
     client.on('join', function(data) {
       console.log(data);
     });
+    client.emit('tweet', { test: 'test' });
   });
   // const express = require('express');
   const passport = require('passport');
