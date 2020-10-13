@@ -98,6 +98,7 @@ module.exports = ({ Router, io }) => {
         }
         newTweet.from = user;
         io.on('connection', function(client) {
+          console.log('test..');
           client.emit('tweet', newTweet);
         });
       } catch (error) {
