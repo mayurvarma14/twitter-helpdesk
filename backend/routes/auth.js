@@ -20,6 +20,13 @@ module.exports = ({ Router, io }) => {
 
   router.get('/twitter', passport.authenticate('twitter'));
 
+  io.on('connection', function(client) {
+    router.get('/test', function(req, res) {
+      client.emit('tweet', { test: 'test' });
+      res.json({});
+    });
+  });
+
   router.get(
     '/twitter/callback',
     passport.authenticate('twitter', {
@@ -50,6 +57,7 @@ module.exports = ({ Router, io }) => {
       console.log(data);
     });
     client.emit('tweet', { test: 'test' });
+
     router.post('/twitter/webhook', function(req, res, next) {
       try {
         if (!validateSignature(req.headers, auth, req.rawBody)) {
@@ -60,50 +68,49 @@ module.exports = ({ Router, io }) => {
         return next(e);
       }
       filterTweets(req.body);
+      client.emit('tweet', { test: 'test1' });
+      client.emit('tweet', req.body);
       console.log('Event received:', JSON.stringify(req.body, null, 2));
       res.status(200).end();
     });
-
-    const isMentionedTweet = (event) =>
-      event &&
-      event.tweet_create_events &&
-      event.tweet_create_events.length &&
-      event.tweet_create_events[0].entities.user_mentions.length;
-
-    const filterTweets = async (event) => {
-      if (!event) return;
-      if (isMentionedTweet(event)) {
-        const tweet = event.tweet_create_events[0];
-
-        try {
-          const newTweet = await new Tweet({
-            userId: event.for_user_id,
-            tweetId: tweet.id_str,
-            from: tweet.user.id_str,
-            text: tweet.text,
-            timestamp: new Date(tweet.timestamp_ms * 1000),
-            inReplyToStatusId: tweet.in_reply_to_status_id_str,
-            inReplyToUserId: tweet.in_reply_to_user_id_str,
-          }).save();
-          let user = await User.findOne({ twitterId: tweet.user.id_str });
-          if (!user) {
-            user = await new User({
-              twitterId: tweet.user.id_str,
-              name: tweet.user.name,
-              screenName: tweet.user.screen_name,
-              location: tweet.user.location,
-              profileImage: tweet.user.profile_image_url_https,
-            }).save();
-          }
-          newTweet.from = user;
-
-          client.emit('tweet', newTweet);
-          client.emit('tweet', {});
-        } catch (error) {
-          console.log('Error saving tweet', error);
-        }
-      }
-    };
   });
+  const isMentionedTweet = (event) =>
+    event &&
+    event.tweet_create_events &&
+    event.tweet_create_events.length &&
+    event.tweet_create_events[0].entities.user_mentions.length;
+
+  const filterTweets = async (event) => {
+    if (!event) return;
+    if (isMentionedTweet(event)) {
+      const tweet = event.tweet_create_events[0];
+
+      try {
+        const newTweet = await new Tweet({
+          userId: event.for_user_id,
+          tweetId: tweet.id_str,
+          from: tweet.user.id_str,
+          text: tweet.text,
+          timestamp: new Date(tweet.timestamp_ms * 1000),
+          inReplyToStatusId: tweet.in_reply_to_status_id_str,
+          inReplyToUserId: tweet.in_reply_to_user_id_str,
+        }).save();
+        let user = await User.findOne({ twitterId: tweet.user.id_str });
+        if (!user) {
+          user = await new User({
+            twitterId: tweet.user.id_str,
+            name: tweet.user.name,
+            screenName: tweet.user.screen_name,
+            location: tweet.user.location,
+            profileImage: tweet.user.profile_image_url_https,
+          }).save();
+        }
+        newTweet.from = user;
+        console.log('Log: filterTweets -> newTweet', newTweet);
+      } catch (error) {
+        console.log('Error saving tweet', error);
+      }
+    }
+  };
   return router;
 };
