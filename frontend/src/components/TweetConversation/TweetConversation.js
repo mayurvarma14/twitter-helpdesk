@@ -20,8 +20,8 @@ class TweetConversation extends Component {
       const conversation = this.props.tweet.conversation;
       if (
         conversation.length &&
-        conversation[conversation.length - 1].inReplyToStatusId ===
-          tweet.tweetId
+        conversation[conversation.length - 1].tweetId ===
+          tweet.inReplyToStatusId
       ) {
         this.props.addReply(tweet);
       } else if (!tweet.inReplyToStatusId) {
