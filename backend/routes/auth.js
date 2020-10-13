@@ -20,11 +20,9 @@ module.exports = ({ Router, io }) => {
 
   router.get('/twitter', passport.authenticate('twitter'));
 
-  io.on('connection', function(client) {
-    router.get('/test', function(req, res) {
-      client.emit('tweet', { test: 'test' });
-      res.json({});
-    });
+  router.get('/test', function(req, res) {
+    req.app.io.emit('tweet', { test: 'test' });
+    res.json({});
   });
 
   router.get(
@@ -57,22 +55,21 @@ module.exports = ({ Router, io }) => {
       console.log(data);
     });
     client.emit('tweet', { test: 'test' });
-
-    router.post('/twitter/webhook', function(req, res, next) {
-      try {
-        if (!validateSignature(req.headers, auth, req.rawBody)) {
-          throw new Error('Cannot validate webhook signature');
-        }
-      } catch (e) {
-        console.error(e);
-        return next(e);
+  });
+  router.post('/twitter/webhook', function(req, res, next) {
+    try {
+      if (!validateSignature(req.headers, auth, req.rawBody)) {
+        throw new Error('Cannot validate webhook signature');
       }
-      filterTweets(req.body);
-      client.emit('tweet', { test: 'test1' });
-      client.emit('tweet', req.body);
-      console.log('Event received:', JSON.stringify(req.body, null, 2));
-      res.status(200).end();
-    });
+    } catch (e) {
+      console.error(e);
+      return next(e);
+    }
+    filterTweets(req.body);
+    req.app.io.emit('tweet', { test: 'test1' });
+    req.app.io.emit('tweet', req.body);
+    console.log('Event received:', JSON.stringify(req.body, null, 2));
+    res.status(200).end();
   });
   const isMentionedTweet = (event) =>
     event &&
