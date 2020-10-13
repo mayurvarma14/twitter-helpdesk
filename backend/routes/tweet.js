@@ -28,7 +28,6 @@ router.post('/', isAuthenticated, async function(req, res, next) {
     access_token: decrypt(req.user.token),
     access_token_secret: decrypt(req.user.tokenSecret),
   });
-  console.log('Log: req.body', req.body);
   twit.post(
     'statuses/update',
     {

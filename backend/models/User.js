@@ -10,10 +10,12 @@ const userSchema = new mongoose.Schema(
     token: {
       iv: String,
       content: String,
+      select: false,
     },
     tokenSecret: {
       iv: String,
       content: String,
+      select: false,
     },
     isRegistered: Boolean,
   },

@@ -3,10 +3,19 @@ import { connect } from 'react-redux';
 
 import { ReactComponent as Loader } from '../../assets/loading.svg';
 import TweetConversationItem from '../TweetConversationItem/TweetConversationItem';
+import { sendReply } from '../../redux/tweet/tweetActions';
 
 import './TweetConversation.scss';
 
 class TweetConversation extends Component {
+  state = { reply: '' };
+  replyConversation(event) {
+    if (event.key === 'Enter') {
+      console.log(this.state.reply);
+      // const tweet=this.props.tweet.conversation[this.props.tweet.conversation.length-1]
+      // this.props.sendReply(`@${tweet.from.screenName} ${this.state.reply}`,tweet.tweetId);
+    }
+  }
   renderList() {
     return this.props.tweet.conversation.map(
       ({ tweetId, from: { profileImage }, text, timestamp }) => {
@@ -65,7 +74,24 @@ class TweetConversation extends Component {
                 className="profile"
               />
             </div>
-            <input type="text" placeholder="Reply..." />
+            <input
+              type="text"
+              placeholder="Reply..."
+              value={this.state.reply}
+              onChange={(e) => this.setState({ reply: e.target.value })}
+              onKeyUp={(event) => {
+                if (event.key === 'Enter') {
+                  const tweet = this.props.tweet.conversation[
+                    this.props.tweet.conversation.length - 1
+                  ];
+                  this.props.sendReply(
+                    `@${tweet.from.screenName} ${this.state.reply}`,
+                    tweet.tweetId
+                  );
+                  this.setState({ reply: '' });
+                }
+              }}
+            />
             <span>
               <i className="fas fa-paperclip"></i>
             </span>
@@ -76,6 +102,6 @@ class TweetConversation extends Component {
   }
 }
 
-export default connect(({ tweet, user }) => ({ tweet, user }))(
+export default connect(({ tweet, user }) => ({ tweet, user }), { sendReply })(
   TweetConversation
 );
