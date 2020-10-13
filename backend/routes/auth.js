@@ -1,4 +1,9 @@
 module.exports = ({ Router, io }) => {
+  io.on('connection', function(client) {
+    client.on('join', function(data) {
+      console.log(data);
+    });
+  });
   // const express = require('express');
   const passport = require('passport');
   const { validateWebhook, validateSignature } = require('twitter-autohook');
