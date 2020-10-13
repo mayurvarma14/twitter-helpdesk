@@ -1,5 +1,4 @@
 import axios from 'axios';
-import history from '../../history';
 
 import { SET_CURRENT_USER, IS_LOADING, SET_LOGGED_IN } from './userTypes';
 import { getConversations } from './../tweet/tweetActions';
@@ -20,7 +19,10 @@ export const getLoggedInUser = () => async (dispatch) => {
 
     dispatch({ type: IS_LOADING, payload: false });
   } catch (error) {
-    if ((error.response && error.response.status = 401)) history.push('/login');
+    if (error.response && error.response.status === 401)
+      window.location.href = '/login';
+
+    dispatch({ type: IS_LOADING, payload: false });
     console.error('Error fetching user', error);
   }
 };
